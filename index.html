@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>إمساكية شهر رمضان المبارك سكاكا 1446هـ</title>
+
+  <style>
+    /***************************************************
+     * 1) إعدادات أساسية للصفحة
+     ***************************************************/
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      direction: rtl;
+      background-color: #0a192f; /* خلفية داكنة */
+      color: #ffffff;           /* نص عام بالأبيض */
+      margin: 0;
+      padding: 20px;
+    }
+
+    /***************************************************
+     * 2) توزيع العناصر العلوية (شعار الوزارة - الهلال - الساعة)
+     ***************************************************/
+    .header-container {
+      display: flex;
+      flex-direction: row;  
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding: 0 10px;
+    }
+    .left-container,
+    .center-container,
+    .right-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /***************************************************
+     * 3) شعار وزارة التعليم (يسار)
+     ***************************************************/
+    .ministry-logo {
+      width: 90px; 
+      height: auto;
+      border-radius: 8px;
+      /* ظل بالأبيض المطفي */
+      box-shadow: 0 6px 15px rgba(221, 221, 221, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .ministry-logo:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 25px rgba(221, 221, 221, 0.5);
+    }
+
+    /***************************************************
+     * 4) الهلال (منتصف) - متحرك
+     ***************************************************/
+    .crescent-logo {
+      width: 60px;
+      height: auto;
+      margin: 0 15px;
+      box-shadow: 0 6px 15px rgba(221, 221, 221, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: rotateCrescent 8s linear infinite;
+    }
+    @keyframes rotateCrescent {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    .crescent-logo:hover {
+      animation-play-state: paused;  
+      transform: scale(1.1);
+      box-shadow: 0 12px 25px rgba(221, 221, 221, 0.5);
+    }
+
+    /***************************************************
+     * 5) الساعة (يمين)
+     ***************************************************/
+    .clock-container {
+      width: 100px;  
+      height: 100px;
+      position: relative;
+      background: #fff;
+      border-radius: 50%;
+      /* إطار الساعة بالأبيض المطفي */
+      border: 4px solid #dddddd;
+      /* ظل بالأبيض المطفي */
+      box-shadow: 0 6px 15px rgba(221, 221, 221, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .clock-container:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 25px rgba(221, 221, 221, 0.5);
+    }
+
+    /* شعار المدرسة في منتصف الساعة */
+    .clock-logo {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      z-index: 1; 
+    }
+
+    /* نقطة المركز في الساعة */
+    .clock-center {
+      width: 10px;
+      height: 10px;
+      background: #dddddd; /* أبيض مطفي */
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+    }
+
+    /* أرقام الساعة */
+    .clock-number {
+      position: absolute;
+      font-size: 12px;
+      font-weight: bold;
+      color: #112240; /* يمكنك تغييره إن أردت */
+      transform: translate(-50%, -50%);
+    }
+    .clock-number[data-num="12"] { top: 5%;  left: 50%; }
+    .clock-number[data-num="1"]  { top: 15%; left: 75%; }
+    .clock-number[data-num="2"]  { top: 30%; left: 90%; }
+    .clock-number[data-num="3"]  { top: 50%; left: 95%; }
+    .clock-number[data-num="4"]  { top: 70%; left: 90%; }
+    .clock-number[data-num="5"]  { top: 85%; left: 75%; }
+    .clock-number[data-num="6"]  { top: 95%; left: 50%; }
+    .clock-number[data-num="7"]  { top: 85%; left: 25%; }
+    .clock-number[data-num="8"]  { top: 70%; left: 10%; }
+    .clock-number[data-num="9"]  { top: 50%; left: 5%; }
+    .clock-number[data-num="10"] { top: 30%; left: 10%; }
+    .clock-number[data-num="11"] { top: 15%; left: 25%; }
+
+    /* عقارب الساعة */
+    .hand {
+      position: absolute;
+      bottom: 50%;
+      left: 50%;
+      transform-origin: bottom;
+      transform: translateX(-50%) rotate(0deg);
+      transition: transform 0.5s cubic-bezier(0.4, 2.3, 0.3, 1);
+      border-radius: 5px;
+    }
+    .hour-hand {
+      width: 4px;
+      height: 25px;
+      background: #dddddd; /* أبيض مطفي */
+    }
+    .minute-hand {
+      width: 2px;
+      height: 40px;
+      background: #dddddd; /* أبيض مطفي */
+    }
+    .second-hand {
+      width: 2px;
+      height: 45px;
+      background: red; /* نبقي اللون الأحمر للثواني */
+    }
+
+    /***************************************************
+     * 6) العناصر الأخرى (العنوان - الإمساكية - إلخ)
+     ***************************************************/
+    h1 {
+      color: #dddddd;  /* أبيض مطفي */
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .imsakiyah {
+      width: 100%;
+      max-width: 700px;
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1),
+                  0 6px 6px rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, filter 0.3s ease-in-out;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease-in-out forwards;
+      margin-bottom: 20px;
+    }
+    .imsakiyah:hover {
+      transform: scale(1.06);
+      box-shadow: 0 20px 40px rgba(255, 255, 255, 0.25),
+                  0 12px 12px rgba(255, 255, 255, 0.2);
+      filter: brightness(1.1) blur(1px);
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .footer, .signature {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #dddddd; /* أبيض مطفي */
+      padding: 12px;
+      background: #0a192f;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .signature-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      margin-top: 20px;
+    }
+    .signature {
+      background: #112240;
+      padding: 15px;
+      border-radius: 10px;
+      font-size: 14px;
+      color: #dddddd; /* أبيض مطفي */
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(221, 221, 221, 0.3),
+                  0 0 25px rgba(221, 221, 221, 0.6);
+      position: relative;
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+    .signature::before {
+      content: "";
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      width: 20px;
+      height: 20px;
+      background: rgba(221, 221, 221, 0.7);
+      border-radius: 50%;
+      transform: translateX(-50%);
+      box-shadow: 0 0 15px rgba(221, 221, 221, 0.8),
+                  0 0 30px rgba(221, 221, 221, 0.6);
+    }
+
+    .social-links {
+      margin-top: 30px;
+      background: #112240;              
+      border-radius: 10px;
+      padding: 15px;
+      color: #dddddd;                   
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(221, 221, 221, 0.3),
+                  0 0 25px rgba(221, 221, 221, 0.6);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      max-width: 400px;
+      margin: 30px auto;
+      text-align: center;
+    }
+    .social-links ul {
+      list-style-type: none; 
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    .social-links li a {
+      font-size: 2rem;
+      color: #dddddd; 
+      text-decoration: none;
+      transition: color 0.3s, transform 0.3s;
+    }
+    .social-links li a:hover {
+      color: #ffffff;
+      transform: scale(1.2);
+    }
+    .social-links:hover {
+      transform: scale(1.02);
+      box-shadow: 0 8px 20px rgba(221, 221, 221, 0.5),
+                  0 0 30px rgba(221, 221, 221, 0.7);
+    }
+
+    /***************************************************
+     * 7) التاريخ الهجري (بين الهلال والإمساكية)
+     ***************************************************/
+    .hijri-date-container {
+      margin: 10px auto 20px auto; /* مسافة بسيطة فوق/تحت */
+      max-width: 200px;            /* عرض مناسب */
+      background: #112240;
+      border-radius: 10px;
+      padding: 8px;
+      box-shadow: 0 4px 10px rgba(221, 221, 221, 0.3),
+                  0 0 25px rgba(221, 221, 221, 0.6);
+    }
+    #hijriDateDisplay {
+      font-size: 14px;
+      font-weight: bold;
+      color: #dddddd;
+    }
+
+.assistant-emoji {
+  font-size: 2rem; /* اختر الحجم الذي تريده */
+  text-decoration: none;
+}
+
+  </style>
+
+  <!-- وسوم Open Graph -->
+  <meta property="og:title" content="إمساكية شهر رمضان المبارك سكاكا 1446هـ" />
+  <meta property="og:description" content="إمساكية رمضان تصميم ثانوية اليرموك بسكاكا" />
+  <meta property="og:image" content="https://alfale7.github.io/Alyarmoukschool/ramadan.png" />
+  <meta property="og:url" content="https://alfale7.github.io/Alyarmoukschool/" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+</head>
+<body>
+
+  <!-- ملف الصوت للتشغيل التلقائي -->
+  <audio id="bgMusic" autoplay loop>
+    <source src="sound.mp3" type="audio/mpeg" />
+    متصفحك لا يدعم تشغيل الصوت.
+  </audio>
+
+  <!-- رأس الصفحة: شعار الوزارة (يسار) - الهلال (وسط) - الساعة (يمين) -->
+  <div class="header-container">
+    <!-- اليسار: شعار الوزارة -->
+    <div class="left-container">
+      <img src="ministry.png" alt="شعار وزارة التعليم" class="ministry-logo" />
+    </div>
+
+    <!-- المنتصف: الهلال (متحرك) -->
+    <div class="center-container">
+      <img src="crescent.png" alt="هلال رمضان" class="crescent-logo" />
+    </div>
+
+    <!-- اليمين: الساعة -->
+    <div class="right-container">
+      <div class="clock-container">
+        <!-- شعار المدرسة في منتصف الساعة -->
+        <img src="school_logo.png" alt="شعار المدرسة" class="clock-logo" />
+        
+        <!-- أرقام الساعة -->
+        <div class="clock-number" data-num="12">12</div>
+        <div class="clock-number" data-num="1">1</div>
+        <div class="clock-number" data-num="2">2</div>
+        <div class="clock-number" data-num="3">3</div>
+        <div class="clock-number" data-num="4">4</div>
+        <div class="clock-number" data-num="5">5</div>
+        <div class="clock-number" data-num="6">6</div>
+        <div class="clock-number" data-num="7">7</div>
+        <div class="clock-number" data-num="8">8</div>
+        <div class="clock-number" data-num="9">9</div>
+        <div class="clock-number" data-num="10">10</div>
+        <div class="clock-number" data-num="11">11</div>
+
+        <!-- العقارب -->
+        <div class="hand hour-hand" id="hour-hand"></div>
+        <div class="hand minute-hand" id="minute-hand"></div>
+        <div class="hand second-hand" id="second-hand"></div>
+        <div class="clock-center"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- التاريخ الهجري (بين الهلال والإمساكية) -->
+  <div class="hijri-date-container">
+    <div id="hijriDateDisplay">التاريخ الهجري يُحدّث...</div>
+  </div>
+
+  <!-- صورة الإمساكية -->
+  <img id="imsakiyah" src="ramadan.png" alt="إمساكية رمضان سكاكا 2025" class="imsakiyah" />
+
+  <!-- التوقيع -->
+  <div class="signature-container">
+    <div class="signature">
+      <p>  مقدم من منسوبي اليرموك الثانوية   </p>
+      <p>مدير المدرسة : حمد فريح المعيقل</p>
+    </div>
+  </div>
+
+  <!-- قسم الروابط -->
+  <div class="social-links">
+    <ul>
+      <!-- البريد الإلكتروني -->
+      <li>
+        <a href="mailto:842225@jb.moe.gov.sa" target="_blank" rel="noopener noreferrer" 
+           title="البريد الإلكتروني للمدرسة">
+          📧
+        </a>
+      </li>
+
+      
+<li>
+  <a href="https://alfale7.github.io/Book/index.html" title="الموقع الإلكتروني للمدرسة">
+    🌐
+  </a>
+</li>
+
+      <!-- قناة اليوتيوب (أيقونة SVG) -->
+      <li>
+        <a href="https://youtube.com/@alyarmoukschool"
+           target="_blank" rel="noopener noreferrer"
+           title="قناة المدرسة على يوتيوب">
+          <svg role="img" viewBox="0 0 24 24" width="24" height="24" fill="#FF0000" style="vertical-align: middle;">
+            <title>YouTube</title>
+            <path d="M23.499 6.203a2.986 2.986 0 0 0-2.11-2.11C19.845 3.5 12 3.5 12 3.5s-7.845 0-9.389.592a2.986 2.986 0 0 0-2.11 2.11A31.517 31.517 0 0 0 0 12c.001 1.978.182 3.947.501 5.797a2.986 2.986 0 0 0 2.11 2.11C4.155 20.5 12 20.5 12 20.5s7.845 0 9.389-.592a2.986 2.986 0 0 0 2.11-2.11A31.517 31.517 0 0 0 24 12a31.517 31.517 0 0 0-.501-5.797zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+        </a>
+      </li>
+<a href="https://www.chatbase.co/chatbot-iframe/_gApu7rnjCHxPJVhTKlnR"
+   class="assistant-emoji"
+   title="المساعد الافتراضي للمدرسة">
+  🤖
+</a>
+
+      <!-- موقع المدرسة على الخريطة -->
+      <li>
+        <a href="https://maps.app.goo.gl/JAkGHVteuDC5eRVC6?g_st=com.google.maps.preview.copy" 
+           target="_blank" rel="noopener noreferrer" 
+           title="موقع المدرسة على الخريطة">
+          📍
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- الفوتر -->
+  <div class="footer-container">
+    <div class="footer">
+      جميع الحقوق محفوظة © مدرسة  اليرموك الثانوية بسكاكا
+    </div>
+  </div>
+
+  <script>
+    // =====================
+    // 1) عقارب الساعة
+    // =====================
+    function updateClock() {
+      const now = new Date();
+      const hours = now.getHours() % 12;
+      const minutes = now.getMinutes();
+      const seconds = now.getSeconds();
+
+      document.getElementById("hour-hand").style.transform =
+        `translateX(-50%) rotate(${hours * 30 + minutes * 0.5}deg)`;
+      document.getElementById("minute-hand").style.transform =
+        `translateX(-50%) rotate(${minutes * 6}deg)`;
+      document.getElementById("second-hand").style.transform =
+        `translateX(-50%) rotate(${seconds * 6}deg)`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+
+    // =====================
+    // 2) تحويل التاريخ الميلادي إلى هجري (تقريبي)
+    // =====================
+    function gregToHijri(gDate) {
+      let day = gDate.getDate();
+      let month = gDate.getMonth() + 1;
+      let year = gDate.getFullYear();
+
+      // حساب اليوم الجولياني (Julian Day Number)
+      const a = Math.floor((14 - month) / 12);
+      const y = year + 4800 - a;
+      const m = month + 12 * a - 3;
+      let jd = day + Math.floor((153 * m + 2) / 5) + 365 * y +
+               Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045;
+
+      // تحويل اليوم الجولياني إلى تاريخ هجري
+      let l = jd - 1948440 + 10632;
+      let n = Math.floor((l - 1) / 10631);
+      l = l - 10631 * n + 354;
+      let j = (Math.floor((10985 - l) / 5316)) *
+              (Math.floor((50 * l) / 17719)) +
+              (Math.floor(l / 5670)) *
+              (Math.floor((43 * l) / 15238));
+      l = l - (Math.floor((30 - j) / 15)) *
+              (Math.floor((17719 * j) / 50)) -
+              (Math.floor(j / 16)) *
+              (Math.floor((15238 * j) / 43)) + 29;
+      const m2 = Math.floor((24 * l) / 709);
+      const d2 = l - Math.floor((709 * m2) / 24);
+      const y2 = 30 * n + j - 30;
+
+      return { day: d2, month: m2, year: y2 };
+    }
+
+    // =====================
+    // 3) عرض التاريخ الهجري بين الهلال والإمساكية
+    // =====================
+    function updateHijriDate() {
+      const now = new Date();
+      const hijri = gregToHijri(now);
+      const hYear = hijri.year;
+      const hMonth = hijri.month;
+      const hDay = hijri.day;
+
+      // ضع التاريخ الهجري في العنصر #hijriDateDisplay
+      document.getElementById("hijriDateDisplay").textContent =
+        "" + hYear + "/" + hMonth + "/" + hDay + " هـ";
+    }
+
+    // حدثه كل دقيقة
+    setInterval(updateHijriDate, 60000);
+    // استدعاؤه عند بدء الصفحة
+    updateHijriDate();
+  </script>
+</body>
+</html>
